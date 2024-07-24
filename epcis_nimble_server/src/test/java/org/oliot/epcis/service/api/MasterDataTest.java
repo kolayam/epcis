@@ -8,13 +8,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.hamcrest.core.IsEqual;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = EPCISRepositoryApplication.class)
@@ -154,11 +155,11 @@ public class MasterDataTest {
             httpRequest.addHeader("Authorization", accessToken);
             httpRequest.setHeader("Content-Type", contentType);
             StringEntity xmlEntity = new StringEntity(entity);
-            httpRequest.setEntity(xmlEntity );
+            httpRequest.setEntity(xmlEntity);
             HttpResponse httpresponse = HttpClientBuilder.create().build().execute(httpRequest);
-            Assert.assertThat(
+            assertThat(
                     httpresponse.getStatusLine().getStatusCode(),
-                    IsEqual.equalTo(HttpStatus.SC_OK));
+                    equalTo(HttpStatus.SC_OK));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,10 +169,10 @@ public class MasterDataTest {
         try {
             HttpUriRequest request = new HttpGet(url);
             request.addHeader("Authorization", accessToken);
-            HttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
-            Assert.assertThat(
+            HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+            assertThat(
                     httpResponse.getStatusLine().getStatusCode(),
-                    IsEqual.equalTo(HttpStatus.SC_OK));
+                    equalTo(HttpStatus.SC_OK));
         } catch (Exception e) {
             e.printStackTrace();
         }
